@@ -1,5 +1,10 @@
 
 ///////////////////////////////////////////////////////////
+// global variables.
+///////////////////////////////////////////////////////////
+backendURL = "http://cyathil.pythonanywhere.com";
+
+///////////////////////////////////////////////////////////
 // [load] family of functions actually modify the DOM.
 ///////////////////////////////////////////////////////////
 
@@ -9,7 +14,7 @@
 function loadQueue() {
 	// send queue request.
 	let xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("GET","http://localhost:8080/queue",true);
+	xmlhttp.open("GET",`${backendURL}/queue`,true);
 	// process queue request.
 	// we use function() as we want to ensure that "this" refers to the xmlhttp object.
 	xmlhttp.onreadystatechange = function() {
@@ -27,6 +32,10 @@ function loadQueue() {
 						queueText += `zid: ${queue[i]["zid"]}. `;
 						queueText += `description: ${queue[i]["description"]}. `;
 						queueText += `status: ${queue[i]["status"]}.`;
+						// TODO.
+						// queueText += generateHelpButton(queue[i]);
+						// queueText += generateResolveButton(queue[i]);
+						// queueText += generateCancelButton(queue[i]);
 						if (i + 1 !== queue.length) {
 							queueText += "<br>"
 						}
@@ -60,7 +69,7 @@ document.getElementById("makeRequestForm").addEventListener("submit", event => {
 	});
 	// send request to backend.
 	let xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("POST", "http://localhost:8080/make_request", true);
+	xmlhttp.open("POST", `${backendURL}/make_request`, true);
 	xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 	xmlhttp.onreadystatechange = function() {
 		// when request has finished reload queue.
@@ -80,7 +89,7 @@ document.getElementById("endSessionButton").addEventListener("click", event => {
 	event.preventDefault();
 	// send request to backend.
 	let xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("DELETE", "http://localhost:8080/end", true);
+	xmlhttp.open("DELETE", `${backendURL}/end`, true);
 	xmlhttp.onreadystatechange = function() {
 		// when request has finished reload queue.
 		if (this.readyState == 4 && this.status == 200) {
