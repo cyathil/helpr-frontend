@@ -1,3 +1,11 @@
+
+///////////////////////////////////////////////////////////
+// [load] family of functions actually modify the DOM.
+///////////////////////////////////////////////////////////
+
+/*
+ * loading helpr queue.
+ */
 function loadQueue() {
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("GET","http://localhost:8080/queue",true);
@@ -16,6 +24,10 @@ function loadQueue() {
 	}
 	xmlhttp.send();
 }
+
+///////////////////////////////////////////////////////////
+// event listeners for DOM events.
+///////////////////////////////////////////////////////////
 
 /*
  * handling makeRequestForm submission.
@@ -36,6 +48,7 @@ document.getElementById("makeRequestForm").addEventListener("submit", event => {
 	xmlhttp.open("POST", "http://localhost:8080/make_request", true);
 	xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 	xmlhttp.onreadystatechange = function() {
+		// when request has finished reload queue.
 		if (this.readyState == 4 && this.status == 200) {
 			loadQueue();
 		}
@@ -54,6 +67,7 @@ document.getElementById("endSessionButton").addEventListener("click", event => {
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("DELETE", "http://localhost:8080/end", true);
 	xmlhttp.onreadystatechange = function() {
+		// when request has finished reload queue.
 		if (this.readyState == 4 && this.status == 200) {
 			loadQueue();
 		}
@@ -61,4 +75,13 @@ document.getElementById("endSessionButton").addEventListener("click", event => {
 	xmlhttp.send();
 });
 
-loadQueue();
+///////////////////////////////////////////////////////////
+// bootstrap event handlers.
+///////////////////////////////////////////////////////////
+
+/*
+ * executed when DOM, images, scripts etc. have all been loaded.
+ */
+window.onload = function() {
+	loadQueue();
+};
