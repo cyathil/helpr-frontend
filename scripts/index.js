@@ -8,7 +8,7 @@ backendURL = "http://cyathil.pythonanywhere.com";
 // [load] family of functions actually modify the DOM.
 ///////////////////////////////////////////////////////////
 
-/*
+/**
  * loading helpr queue.
  */
 function loadQueue() {
@@ -53,7 +53,7 @@ function loadQueue() {
 // event listeners for DOM events.
 ///////////////////////////////////////////////////////////
 
-/*
+/**
  * handling makeRequestForm submission.
  */
 // the arrow function is called with the submit event as its argument when the submit event occurs.
@@ -80,7 +80,7 @@ document.getElementById("makeRequestForm").addEventListener("submit", event => {
 	xmlhttp.send(requestBody);
 });
 
-/*
+/**
  * handling endSessionButton.
  */
 // the arrow function is called with the click event as its argument when the click event occurs.
@@ -103,7 +103,7 @@ document.getElementById("endSessionButton").addEventListener("click", event => {
 // bootstrap event handlers.
 ///////////////////////////////////////////////////////////
 
-/*
+/**
  * executed when DOM, images, scripts etc. have all been loaded.
  */
 window.onload = function() {
