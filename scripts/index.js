@@ -25,17 +25,30 @@ function loadQueue() {
 			if (queue.length === 0) {
 				document.getElementById("helprQueue").innerHTML = `no students in queue.`;
 			} else {
+				function generateButton(request,type) {
+					return `<button class=${type} value=${request["zid"]}>${type}</button>`
+				}
+				function generateButtonForm(request) {
+					buttonsText = "";
+					buttonsText += "<form>";
+					// TODO: add event listeners for any button in a given request div.
+					// depending on the type of button, send a specific http request as needed.
+					buttonsText += generateButton(request,"help");
+					buttonsText += generateButton(request,"resolve");
+					buttonsText += generateButton(request,"cancel");
+					buttonsText += "</form>";
+					return buttonsText;
+				}
 				function generateQueueText(queue) {
 					queueText = "the queue is:<br>";
 					for (let i = 0; i < queue.length; i++) {
+						// TODO: make each request it's own div.
+						// when request is resolved delete respective div.
 						queueText += `${i + 1}: `;
 						queueText += `zid: ${queue[i]["zid"]}. `;
 						queueText += `description: ${queue[i]["description"]}. `;
 						queueText += `status: ${queue[i]["status"]}.`;
-						// TODO.
-						// queueText += generateHelpButton(queue[i]);
-						// queueText += generateResolveButton(queue[i]);
-						// queueText += generateCancelButton(queue[i]);
+						queueText += generateButtonForm(queue[i]);
 						if (i + 1 !== queue.length) {
 							queueText += "<br>"
 						}
