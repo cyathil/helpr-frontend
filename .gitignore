@@ -6,3 +6,6 @@
 
 # pycache files.
 *.pyc
+
+# markdown files (for now).
+*.md
