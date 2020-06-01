@@ -18,7 +18,7 @@ function loadQueue() {
 	// process queue request.
 	// we use function() as we want to ensure that "this" refers to the xmlhttp object.
 	xmlhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
+		if (this.readyState === 4 && this.status === 200) {
 			let queue = JSON.parse(this.responseText);
 			console.log("the queue is:");
 			console.log(queue);
@@ -87,7 +87,7 @@ document.getElementById("makeRequestForm").addEventListener("submit", event => {
 	xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 	xmlhttp.onreadystatechange = function() {
 		// when request has finished reload queue.
-		if (this.readyState == 4 && this.status == 200) {
+		if (this.readyState === 4 && this.status === 200) {
 			loadQueue();
 		}
 	};
@@ -106,7 +106,7 @@ document.getElementById("endSessionButton").addEventListener("click", event => {
 	xmlhttp.open("DELETE", `${backendURL}/end`, true);
 	xmlhttp.onreadystatechange = function() {
 		// when request has finished reload queue.
-		if (this.readyState == 4 && this.status == 200) {
+		if (this.readyState === 4 && this.status === 200) {
 			loadQueue();
 		}
 	};
