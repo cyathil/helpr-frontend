@@ -23,37 +23,22 @@ function loadQueue() {
 			console.log("the queue is:");
 			console.log(queue);
 			if (queue.length === 0) {
-				document.getElementById("helprQueue").innerHTML = `no students in queue.`;
+				document.getElementById("helprQueueList").innerHTML = "no students in queue.";
 			} else {
-				function generateButton(request,type) {
-					return `<button class=${type} value=${request["zid"]}>${type}</button>`
+				// first empty the list.
+				document.getElementById("helprQueueList").innerHTML = "";
+				// now add items to the empty list.
+				for (let i = 0; i < queue.length; i++) {
+					let queueListItem = document.createElement("li");
+					queueListItem.appendChild(document.createTextNode(`zid: ${queue[i]["zid"]} `));
+					queueListItem.appendChild(document.createTextNode(`description: ${queue[i]["description"]} `));
+					queueListItem.appendChild(document.createTextNode(`status: ${queue[i]["status"]} `));
+					queueListItem.appendChild(generateButtonForm(queue[i]));
+					// add item to list.
+					document.getElementById("helprQueueList").appendChild(queueListItem);
 				}
-				function generateButtonForm(request) {
-					buttonsText = "";
-					buttonsText += "<form>";
-					// TODO: add event listeners for any button in a given request div.
-					// depending on the type of button, send a specific http request as needed.
-					buttonsText += generateButton(request,"help");
-					buttonsText += generateButton(request,"resolve");
-					buttonsText += generateButton(request,"cancel");
-					buttonsText += "</form>";
-					return buttonsText;
-				}
-				function generateQueueText(queue) {
-					queueText = "the queue is:<br>";
-					for (let i = 0; i < queue.length; i++) {
-						queueText += `${i + 1}: `;
-						queueText += `zid: ${queue[i]["zid"]}. `;
-						queueText += `description: ${queue[i]["description"]}. `;
-						queueText += `status: ${queue[i]["status"]}.`;
-						queueText += generateButtonForm(queue[i]);
-						if (i + 1 !== queue.length) {
-							queueText += "<br>"
-						}
-					}
-					return queueText;
-				}
-				document.getElementById("helprQueue").innerHTML = generateQueueText(queue);
+
+
 			}
 		};
 	}
@@ -65,7 +50,42 @@ function loadQueue() {
 ///////////////////////////////////////////////////////////
 
 /**
- * handling makeRequestForm submission.
+ * generate <button> element (with click event listener attatched).
+ * @param {object} request 
+ * @param {string} type 
+ */
+function generateButton(request, type) {
+	let button = document.createElement("button");
+	button.className = type;
+	button.value = request["zid"];
+	button.appendChild(document.createTextNode(`${type}`));
+	// the arrow function is called with the click event as its argument when the click event occurs.
+	button.addEventListener("click", event => {
+		// stop the default behaviour of the click event.
+		event.preventDefault();
+		// create json request body from button information.
+		const zid = button.value;
+		const requestBody = JSON.stringify({
+			"zid": zid,
+		});
+		// send request to backend.
+		let xmlhttp = new XMLHttpRequest();
+		let method = (button.className === "help") ? "POST" : "DELETE";
+		xmlhttp.open(method, `${backendURL}/${button.className}`, true);
+		xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+		xmlhttp.onreadystatechange = function () {
+			// when request has finished reload queue.
+			if (this.readyState === 4 && this.status === 200) {
+				loadQueue();
+			}
+		};
+		xmlhttp.send(requestBody);
+	})
+	return button;
+}
+
+/**
+ * makeRequestForm submission event listener.
  */
 // the arrow function is called with the submit event as its argument when the submit event occurs.
 document.getElementById("makeRequestForm").addEventListener("submit", event => {
@@ -75,8 +95,8 @@ document.getElementById("makeRequestForm").addEventListener("submit", event => {
 	// note: explictly declaring makeRequestForm like below is optional in our use case,
 	// as it has the exact same as the dom element.
 	const makeRequestForm = document.getElementById("makeRequestForm");
-	const zid = makeRequestForm["zid"]["value"]; 
-	const description = makeRequestForm["description"]["value"];
+	const zid = makeRequestForm["zid"].value; 
+	const description = makeRequestForm["description"].value;
 	const requestBody = JSON.stringify({
 		"zid": zid,
 		"description": description,
@@ -95,7 +115,7 @@ document.getElementById("makeRequestForm").addEventListener("submit", event => {
 });
 
 /**
- * handling endSessionButton.
+ * endSessionButton click event listener.
  */
 // the arrow function is called with the click event as its argument when the click event occurs.
 document.getElementById("endSessionButton").addEventListener("click", event => {
@@ -123,3 +143,21 @@ document.getElementById("endSessionButton").addEventListener("click", event => {
 window.onload = function() {
 	loadQueue();
 };
+
+///////////////////////////////////////////////////////////
+// helper functions.
+///////////////////////////////////////////////////////////
+
+/**
+ * generate <form> element.
+ * @param {object} request 
+ */
+function generateButtonForm(request) {
+	let form = document.createElement("form");
+	form.className = "buttonForm";
+	// each button has an event listener attached.
+	form.appendChild(generateButton(request, "help"));
+	form.appendChild(generateButton(request, "resolve"));
+	form.appendChild(generateButton(request, "cancel"));
+	return form;
+}
