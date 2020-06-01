@@ -23,12 +23,11 @@ function loadQueue() {
 		if (this.readyState === 4 && this.status === 200) {
 			// the returned queue from backend.
 			let queue = JSON.parse(this.responseText);
-			console.log("the queue is:");
-			console.log(queue);
 			if (queue.length === 0) {
 				document.getElementById("requestList").innerHTML = "no requests in queue.";
 			} else {
 				// TODO: docs: using innerHTML vs appendChild().
+				// reference commit e03c131.
 				// first empty the list.
 				document.getElementById("requestList").innerHTML = "";
 				// now add items to the empty list.
