@@ -42,8 +42,6 @@ function loadQueue() {
 				function generateQueueText(queue) {
 					queueText = "the queue is:<br>";
 					for (let i = 0; i < queue.length; i++) {
-						// TODO: make each request it's own div.
-						// when request is resolved delete respective div.
 						queueText += `${i + 1}: `;
 						queueText += `zid: ${queue[i]["zid"]}. `;
 						queueText += `description: ${queue[i]["description"]}. `;
@@ -74,6 +72,9 @@ document.getElementById("makeRequestForm").addEventListener("submit", event => {
 	// stop the default behaviour of the submit event.
 	event.preventDefault();
 	// create json request body from makeRequestForm information.
+	// note: explictly declaring makeRequestForm like below is optional in our use case,
+	// as it has the exact same as the dom element.
+	const makeRequestForm = document.getElementById("makeRequestForm");
 	const zid = makeRequestForm["zid"]["value"]; 
 	const description = makeRequestForm["description"]["value"];
 	const requestBody = JSON.stringify({
