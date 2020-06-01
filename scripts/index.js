@@ -75,8 +75,8 @@ function generateButton(request, type) {
 		});
 		// send request to backend.
 		let xmlhttp = new XMLHttpRequest();
-		const method = (button.className === "help") ? "POST" : "DELETE";
-		xmlhttp.open(method, `${backendURL}/${button.className}`, true);
+		const method = (type === "help") ? "POST" : "DELETE";
+		xmlhttp.open(method, `${backendURL}/${type}`, true);
 		xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 		xmlhttp.onreadystatechange = function () {
 			// when request has finished reload queue.
