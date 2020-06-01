@@ -2,6 +2,7 @@
 ///////////////////////////////////////////////////////////
 // global variables.
 ///////////////////////////////////////////////////////////
+
 backendURL = "http://cyathil.pythonanywhere.com";
 
 ///////////////////////////////////////////////////////////
@@ -16,6 +17,7 @@ function loadQueue() {
 	let xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("GET",`${backendURL}/queue`,true);
 	// process queue request.
+	// TODO: docs: when to use function() vs fat arrow function.
 	// we use function() as we want to ensure that "this" refers to the xmlhttp object.
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState === 4 && this.status === 200) {
@@ -25,6 +27,7 @@ function loadQueue() {
 			if (queue.length === 0) {
 				document.getElementById("helprQueueList").innerHTML = "no students in queue.";
 			} else {
+				// TODO: docs: using innerHTML vs appendChild().
 				// first empty the list.
 				document.getElementById("helprQueueList").innerHTML = "";
 				// now add items to the empty list.
@@ -56,21 +59,18 @@ function loadQueue() {
  */
 function generateButton(request, type) {
 	let button = document.createElement("button");
-	button.className = type;
-	button.value = request["zid"];
 	button.appendChild(document.createTextNode(`${type}`));
-	// the arrow function is called with the click event as its argument when the click event occurs.
+	// TODO: docs: event listeners.
+	// attach event listener.
 	button.addEventListener("click", event => {
-		// stop the default behaviour of the click event.
 		event.preventDefault();
-		// create json request body from button information.
-		const zid = button.value;
+		const zid = request["zid"];
 		const requestBody = JSON.stringify({
 			"zid": zid,
 		});
 		// send request to backend.
 		let xmlhttp = new XMLHttpRequest();
-		let method = (button.className === "help") ? "POST" : "DELETE";
+		const method = (button.className === "help") ? "POST" : "DELETE";
 		xmlhttp.open(method, `${backendURL}/${button.className}`, true);
 		xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 		xmlhttp.onreadystatechange = function () {
@@ -87,11 +87,13 @@ function generateButton(request, type) {
 /**
  * makeRequestForm submission event listener.
  */
+// TODO: docs: event listeners.
 // the arrow function is called with the submit event as its argument when the submit event occurs.
 document.getElementById("makeRequestForm").addEventListener("submit", event => {
 	// stop the default behaviour of the submit event.
 	event.preventDefault();
 	// create json request body from makeRequestForm information.
+	// TODO: docs: explain why below is the case.
 	// note: explictly declaring makeRequestForm like below is optional in our use case,
 	// as it has the exact same as the dom element.
 	const makeRequestForm = document.getElementById("makeRequestForm");
@@ -117,6 +119,7 @@ document.getElementById("makeRequestForm").addEventListener("submit", event => {
 /**
  * endSessionButton click event listener.
  */
+// TODO: docs: event listeners.
 // the arrow function is called with the click event as its argument when the click event occurs.
 document.getElementById("endSessionButton").addEventListener("click", event => {
 	// stop the default behaviour of the click event.
