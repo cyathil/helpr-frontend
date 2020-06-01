@@ -21,24 +21,25 @@ function loadQueue() {
 	// we use function() as we want to ensure that "this" refers to the xmlhttp object.
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState === 4 && this.status === 200) {
+			// the returned queue from backend.
 			let queue = JSON.parse(this.responseText);
 			console.log("the queue is:");
 			console.log(queue);
 			if (queue.length === 0) {
-				document.getElementById("helprQueueList").innerHTML = "no students in queue.";
+				document.getElementById("requestList").innerHTML = "no requests in queue.";
 			} else {
 				// TODO: docs: using innerHTML vs appendChild().
 				// first empty the list.
-				document.getElementById("helprQueueList").innerHTML = "";
+				document.getElementById("requestList").innerHTML = "";
 				// now add items to the empty list.
 				for (let i = 0; i < queue.length; i++) {
-					let queueListItem = document.createElement("li");
-					queueListItem.appendChild(document.createTextNode(`zid: ${queue[i]["zid"]} `));
-					queueListItem.appendChild(document.createTextNode(`description: ${queue[i]["description"]} `));
-					queueListItem.appendChild(document.createTextNode(`status: ${queue[i]["status"]} `));
-					queueListItem.appendChild(generateButtonForm(queue[i]));
+					let request = document.createElement("li");
+					request.appendChild(document.createTextNode(`zid: ${queue[i]["zid"]}. `));
+					request.appendChild(document.createTextNode(`description: ${queue[i]["description"]}. `));
+					request.appendChild(document.createTextNode(`status: ${queue[i]["status"]}.`));
+					request.appendChild(generateButtonForm(queue[i]));
 					// add item to list.
-					document.getElementById("helprQueueList").appendChild(queueListItem);
+					document.getElementById("requestList").appendChild(request);
 				}
 			}
 		};
@@ -58,6 +59,12 @@ function loadQueue() {
 function generateButton(request, type) {
 	let button = document.createElement("button");
 	button.appendChild(document.createTextNode(`${type}`));
+	// disallow cases where backend will through BAD_REQUEST.
+	if (request["status"] === "waiting" && type === "resolve") {
+		button.disabled = true;
+	} else if (request["status"] === "receiving" && (type === "help" || type === "cancel")) {
+		button.disabled = true;
+	}
 	// TODO: docs: event listeners.
 	// attach event listener.
 	button.addEventListener("click", event => {
@@ -155,7 +162,6 @@ window.onload = function() {
  */
 function generateButtonForm(request) {
 	let form = document.createElement("form");
-	form.className = "buttonForm";
 	// each button has an event listener attached.
 	form.appendChild(generateButton(request, "help"));
 	form.appendChild(generateButton(request, "resolve"));
