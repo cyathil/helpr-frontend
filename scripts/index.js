@@ -40,8 +40,6 @@ function loadQueue() {
 					// add item to list.
 					document.getElementById("helprQueueList").appendChild(queueListItem);
 				}
-
-
 			}
 		};
 	}
