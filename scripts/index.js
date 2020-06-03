@@ -159,20 +159,3 @@ document.getElementById("endSessionButton").addEventListener("click", event => {
 window.onload = function() {
 	loadQueue();
 };
-
-///////////////////////////////////////////////////////////
-// helper functions.
-///////////////////////////////////////////////////////////
-
-/**
- * generate <form> element.
- * @param {object} request 
- */
-function generateButtonForm(request) {
-	let form = document.createElement("form");
-	// each button has an event listener attached.
-	form.appendChild(generateButton(request, "help"));
-	form.appendChild(generateButton(request, "resolve"));
-	form.appendChild(generateButton(request, "cancel"));
-	return form;
-}
