@@ -67,7 +67,7 @@ function loadQueue() {
 function generateButton(request, type) {
 	let button = document.createElement("button");
 	button.appendChild(document.createTextNode(`${type}`));
-	// disallow cases where backend will through BAD_REQUEST.
+	// disallow cases where backend will throw BAD_REQUEST.
 	if (request["status"] === "waiting" && type === "resolve") {
 		button.disabled = true;
 	} else if (request["status"] === "receiving" && (type === "help" || type === "cancel")) {
