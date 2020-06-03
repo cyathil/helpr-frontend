@@ -15,11 +15,11 @@ backendURL = "http://cyathil.pythonanywhere.com";
 function loadQueue() {
 	// send queue request.
 	let xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("GET",`${backendURL}/queue`,true);
+	xmlhttp.open("GET", `${backendURL}/queue`, true);
 	// process queue request.
 	// TODO: docs: when to use function() vs fat arrow function.
 	// we use function() as we want to ensure that "this" refers to the xmlhttp object.
-	xmlhttp.onreadystatechange = function() {
+	xmlhttp.onreadystatechange = function () {
 		if (this.readyState === 4 && this.status === 200) {
 			// the returned queue from backend.
 			let queue = JSON.parse(this.responseText);
@@ -38,7 +38,7 @@ function loadQueue() {
 					request.appendChild(document.createTextNode(`status: ${queue[i]["status"]}.`));
 					// TODO: docs: anonymous function declarations and immediate invocations.
 					// append form element containing three button elements.
-					request.appendChild(function(request) {
+					request.appendChild(function (request) {
 						let form = document.createElement("form");
 						// each button has an event listener attached.
 						form.appendChild(generateButton(request, "help"));
@@ -110,7 +110,7 @@ document.getElementById("makeRequestForm").addEventListener("submit", event => {
 	// note: explictly declaring makeRequestForm like below is optional in our use case,
 	// as it has the exact same as the dom element.
 	const makeRequestForm = document.getElementById("makeRequestForm");
-	const zid = makeRequestForm["zid"].value; 
+	const zid = makeRequestForm["zid"].value;
 	const description = makeRequestForm["description"].value;
 	const requestBody = JSON.stringify({
 		"zid": zid,
@@ -120,7 +120,7 @@ document.getElementById("makeRequestForm").addEventListener("submit", event => {
 	let xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("POST", `${backendURL}/make_request`, true);
 	xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-	xmlhttp.onreadystatechange = function() {
+	xmlhttp.onreadystatechange = function () {
 		// when request has finished reload queue.
 		if (this.readyState === 4 && this.status === 200) {
 			loadQueue();
@@ -140,7 +140,7 @@ document.getElementById("endSessionButton").addEventListener("click", event => {
 	// send request to backend.
 	let xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("DELETE", `${backendURL}/end`, true);
-	xmlhttp.onreadystatechange = function() {
+	xmlhttp.onreadystatechange = function () {
 		// when request has finished reload queue.
 		if (this.readyState === 4 && this.status === 200) {
 			loadQueue();
@@ -156,6 +156,6 @@ document.getElementById("endSessionButton").addEventListener("click", event => {
 /**
  * executed when DOM, images, scripts etc. have all been loaded.
  */
-window.onload = function() {
+window.onload = function () {
 	loadQueue();
 };
