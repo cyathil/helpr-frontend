@@ -36,7 +36,16 @@ function loadQueue() {
 					request.appendChild(document.createTextNode(`zid: ${queue[i]["zid"]}. `));
 					request.appendChild(document.createTextNode(`description: ${queue[i]["description"]}. `));
 					request.appendChild(document.createTextNode(`status: ${queue[i]["status"]}.`));
-					request.appendChild(generateButtonForm(queue[i]));
+					// TODO: docs: anonymous function declarations and immediate invocations.
+					// append form element containing three button elements.
+					request.appendChild(function(request) {
+						let form = document.createElement("form");
+						// each button has an event listener attached.
+						form.appendChild(generateButton(request, "help"));
+						form.appendChild(generateButton(request, "resolve"));
+						form.appendChild(generateButton(request, "cancel"));
+						return form;
+					})(request);
 					// add item to list.
 					document.getElementById("requestList").appendChild(request);
 				}
