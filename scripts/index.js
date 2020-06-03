@@ -50,7 +50,7 @@ function loadQueue() {
 					document.getElementById("requestList").appendChild(request);
 				}
 			}
-		};
+		}
 	}
 	xmlhttp.send();
 }
