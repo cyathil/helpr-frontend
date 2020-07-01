@@ -16,12 +16,12 @@ function loadQueue() {
 	// send queue request.
 	let xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("GET", `${backendURL}/queue`, true);
-	// process queue request.
+	// process queue http request.
 	// TODO: docs: when to use function() vs fat arrow function.
 	// we use function() as we want to ensure that "this" refers to the xmlhttp object.
 	xmlhttp.onreadystatechange = function () {
 		if (this.readyState === 4 && this.status === 200) {
-			// the returned queue from backend.
+			// the returned queue of requests from backend.
 			let queue = JSON.parse(this.responseText);
 			if (queue.length === 0) {
 				document.getElementById("requestList").innerHTML = "no requests in queue.";
