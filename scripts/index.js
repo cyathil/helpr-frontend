@@ -45,7 +45,7 @@ function loadQueue() {
 						form.appendChild(generateButton(request, "resolve"));
 						form.appendChild(generateButton(request, "cancel"));
 						return form;
-					})(request);
+					}(queue[i]));
 					// add item to list.
 					document.getElementById("requestList").appendChild(request);
 				}
