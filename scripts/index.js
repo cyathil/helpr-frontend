@@ -57,7 +57,7 @@ function loadQueue() {
 }
 
 ///////////////////////////////////////////////////////////
-// event listeners for DOM events.
+// event handlers for DOM events.
 ///////////////////////////////////////////////////////////
 
 /**
@@ -74,8 +74,6 @@ function generateButton(request, type) {
 	} else if (request["status"] === "receiving" && (type === "help" || type === "cancel")) {
 		button.disabled = true;
 	}
-	// TODO: docs: event listeners.
-	// attach event listener.
 	button.addEventListener("click", event => {
 		event.preventDefault();
 		const zid = request["zid"];
@@ -98,18 +96,10 @@ function generateButton(request, type) {
 	return button;
 }
 
-/**
- * makeRequestForm submission event listener.
- */
-// TODO: docs: event listeners.
-// the arrow function is called with the submit event as its argument when the submit event occurs.
-document.getElementById("makeRequestForm").addEventListener("submit", event => {
+function handleMakeRequestFormSubmit(event) {
 	// stop the default behaviour of the submit event.
 	event.preventDefault();
 	// create json request body from makeRequestForm information.
-	// TODO: docs: explain why below is the case.
-	// note: explictly declaring makeRequestForm like below is optional in our use case,
-	// as it has the exact same as the dom element.
 	const makeRequestForm = document.getElementById("makeRequestForm");
 	const zid = makeRequestForm["zid"].value;
 	const description = makeRequestForm["description"].value;
@@ -128,14 +118,9 @@ document.getElementById("makeRequestForm").addEventListener("submit", event => {
 		}
 	};
 	xmlhttp.send(requestBody);
-});
+}
 
-/**
- * endSessionButton click event listener.
- */
-// TODO: docs: event listeners.
-// the arrow function is called with the click event as its argument when the click event occurs.
-document.getElementById("endSessionButton").addEventListener("click", event => {
+function handleEndSessionButton(event) {
 	// stop the default behaviour of the click event.
 	event.preventDefault();
 	// send request to backend.
@@ -148,15 +133,11 @@ document.getElementById("endSessionButton").addEventListener("click", event => {
 		}
 	};
 	xmlhttp.send();
-});
-
-///////////////////////////////////////////////////////////
-// bootstrap event handlers.
-///////////////////////////////////////////////////////////
+}
 
 /**
- * executed when DOM, images, scripts etc. have all been loaded.
+ * Bootstrap event listeners.
  */
 window.onload = function () {
 	loadQueue();
-};
+}
