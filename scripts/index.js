@@ -44,6 +44,7 @@ function loadQueue() {
 						form.appendChild(generateButton(request, "help"));
 						form.appendChild(generateButton(request, "resolve"));
 						form.appendChild(generateButton(request, "cancel"));
+						form.appendChild(generateButton(request, "revert"));
 						return form;
 					}(queue[i]));
 					// add item to list.
@@ -68,7 +69,7 @@ function generateButton(request, type) {
 	let button = document.createElement("button");
 	button.appendChild(document.createTextNode(`${type}`));
 	// disallow cases where backend will throw BAD_REQUEST.
-	if (request["status"] === "waiting" && type === "resolve") {
+	if (request["status"] === "waiting" && (type === "resolve" || type === "revert")) {
 		button.disabled = true;
 	} else if (request["status"] === "receiving" && (type === "help" || type === "cancel")) {
 		button.disabled = true;
@@ -83,7 +84,7 @@ function generateButton(request, type) {
 		});
 		// send request to backend.
 		let xmlhttp = new XMLHttpRequest();
-		const method = (type === "help") ? "POST" : "DELETE";
+		const method = (type === "help" || type === "revert") ? "POST" : "DELETE";
 		xmlhttp.open(method, `${backendURL}/${type}`, true);
 		xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 		xmlhttp.onreadystatechange = function () {
