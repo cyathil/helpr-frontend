@@ -6,7 +6,9 @@
 /* input {
 	width: 200px;
 } */
-
+body {
+	font-family: sans-serif;
+}
 .container {
 	text-align: center;
 	padding: 1em 0;
