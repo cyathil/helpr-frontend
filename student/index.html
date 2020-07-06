@@ -6,7 +6,7 @@
 	<!-- mobile optimization. -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="../styles/style.css" rel="stylesheet">
-	<script src="../scripts/student.js" defer></script>
+	<script src="../scripts/student.js"></script>
 	<title>helpr</title>
 </head>
 
@@ -16,9 +16,20 @@
 		<h2 id="greeting"></h2>
 	</div>
 
-	<!-- makeRequestForm. empty if invalid login. -->
+	<!-- makeRequestForm. -->
 	<div class="container">
-		<form id="makeRequestForm"></form>
+		<form id="makeRequestForm">
+			<h2>make request form</h2>
+			<p>
+				<label for="description">description:</label>
+				<input type="text" name="description">
+	 		</p>	
+		</form>
+	</div>
+
+	<!-- requestStatus. -->
+	<div class="container">
+		<form id="requestStatus"></form>
 	</div>
 </body>
 
