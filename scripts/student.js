@@ -20,8 +20,7 @@ if (!(zid && isStudent)) {
 
 // otherwise, perform callback function on page load.
 window.onload = function() {
-	// current login is valid student.
-	
+
 	// fill in greeting.
 	document.getElementById("greeting").appendChild(function () {
 		const p = document.createElement("p");
@@ -29,7 +28,7 @@ window.onload = function() {
 		return p;
 	}());
 
-	// event listener for make request form.
+	// add event listener for make request form submission.
 	document.getElementById("makeRequestForm").addEventListener("submit", event => {
 		event.preventDefault();
 		// create json request body from makeRequestForm information.
