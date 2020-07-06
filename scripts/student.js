@@ -34,7 +34,7 @@ if (zid && isStudent) {
 	const p = document.createElement("p");
 	const label = document.createElement("label");
 	label.setAttribute("for", "description");
-	label.appendChild(document.createTextNode("description"));
+	label.appendChild(document.createTextNode("description: "));
 	const input = document.createElement("input");
 	input.setAttribute("type", "text");
 	input.setAttribute("name", "description");
