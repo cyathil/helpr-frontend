@@ -42,7 +42,7 @@ window.onload = function () {
 		let xmlhttp = new XMLHttpRequest();
 		xmlhttp.open("DELETE", `${backendURL}/end`, true);
 		xmlhttp.onreadystatechange = function () {
-			// when request has finished reload queue.
+			// when request has finished refill requestList.
 			if (this.readyState === 4 && this.status === 200) {
 				loadQueue();
 			}
