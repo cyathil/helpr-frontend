@@ -34,6 +34,7 @@ window.onload = function() {
 		// create json request body from makeRequestForm information.
 		const description = makeRequestForm["description"].value;
 		const requestBody = JSON.stringify({
+			// taken from sessionStorage.
 			"zid": zid,
 			"description": description,
 		});
