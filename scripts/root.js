@@ -1,3 +1,8 @@
+///////////////////////////////////////////////////////////
+// bootstrap.
+///////////////////////////////////////////////////////////
+
+// perform callback function on page load.
 window.onload = function() {
 	document.getElementById("studentForm").addEventListener("submit", (event) => {
 		event.preventDefault();
